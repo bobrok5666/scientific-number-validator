@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Number Validator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .input-section {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .valid {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .invalid {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info-section {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #eaf2f8;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        .examples {
+            margin: 20px 0;
+        }
+        .example {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        .example-input {
+            width: 120px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scientific Number Validator</h1>
+        <h2>Mathematics Assignment</h2>
+        
+        <div class="input-section">
+            <label for="inputNumber">Input string:</label>
+            <input type="text" id="inputNumber" placeholder="Enter a number (e.g., 1.23e+5, -4.56E-7)">
+            <button onclick="validateNumber()">Check Number</button>
+        </div>
+        
+        <div id="result" class="result" style="display: none;">
+            Message: <span id="message"></span>
+        </div>
+        
+        <div class="info-section">
+            <h3>About Scientific Notation</h3>
+            <p>Scientific notation is a way of writing very large or very small numbers in a compact form. A number is written in scientific notation when a number between 1 and 10 is multiplied by a power of 10.</p>
+            
+            <p><strong>General format:</strong> ±a.b × 10<sup>±n</sup> or ±a.bE±n</p>
+            
+            <div class="examples">
+                <h4>Valid Examples:</h4>
+                <div class="example"><div class="example-input">1.23e+5</div> → 1.23 × 10<sup>5</sup></div>
+                <div class="example"><div class="example-input">-4.56E-7</div> → -4.56 × 10<sup>-7</sup></div>
+                <div class="example"><div class="example-input">3.0</div> → Regular decimal number</div>
+                <div class="example"><div class="example-input">-0.0021</div> → Negative decimal</div>
+                
+                <h4>Invalid Examples:</h4>
+                <div class="example"><div class="example-input">12..</div> → Double decimal point</div>
+                <div class="example"><div class="example-input">--234</div> → Double negative sign</div>
+                <div class="example"><div class="example-input">1.23e</div> → Missing exponent</div>
+                <div class="example"><div class="example-input">e5</div> → Missing coefficient</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Created by: Frenki Parluhutan Sinaga</p>
+            <p>NIM: 221011030053</p>
+            <p>Mathematics Department</p>
+        </div>
+    </div>
+
+    <script>
+        function validateNumber() {
+            const input = document.getElementById('inputNumber').value.trim();
+            const resultDiv = document.getElementById('result');
+            const messageSpan = document.getElementById('message');
+            
+            // Regular expression to validate numbers in various formats
+            const numberRegex = /^[-+]?(\d+\.?\d*|\.\d+)([eE][-+]?\d+|×10\^[-+]?\d+)?$/;
+            
+            const isValid = numberRegex.test(input) && 
+                          !input.includes('..') && // Check for double decimal
+                          !input.match(/--/) && // Check for double negative
+                          !input.match(/^[-+]?\.?$/); // Check for incomplete numbers
+            
+            resultDiv.style.display = 'block';
+            resultDiv.className = isValid ? 'valid' : 'invalid';
+            messageSpan.textContent = isValid ? 'Yes, it is a number' : 'No, it is not a number';
+        }
+    </script>
+</body>
+</html>
